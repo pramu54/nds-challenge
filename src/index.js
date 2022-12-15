@@ -4,11 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import '@coreui/coreui/dist/css/coreui.min.css'
+import { Provider } from 'react-redux';
+import store from './utils/store';
+import axios from 'axios';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+//default baseUrl
+axios.defaults.baseURL="https://63929998b750c8d178e16014.mockapi.io/api";
+
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 

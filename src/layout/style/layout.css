@@ -1,0 +1,13 @@
+.wrapper{
+    width: auto;
+    padding-left: 16em;
+}
+
+.wrapper-narrow{
+    width: auto;
+    padding-left: 4em;
+}
+
+.wrapper-hidden{
+    padding-left: 0;
+}

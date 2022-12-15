@@ -1,22 +1,32 @@
 import { cilHome, cilUser } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 import { CNavItem, CNavTitle, CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from "@coreui/react";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./style/sidebar.css";
 
 const SidebarMenu = () => {
-    const [isNarrowed, setIsNarrowed] = useState(false);
-    const [isVisible, setIsVisible] = useState(true);
 
-    const onNarrow = () => {
-        setIsNarrowed(!isNarrowed);
-        setIsVisible(!isVisible);
-    }
+    const dispatch = useDispatch()
+    const sidebarShow = useSelector((state) => state.sidebarShow)
+    const sidebarNarrowed = useSelector((state) => state.sidebarNarrowed)
 
     return(
         <>
-            <CSidebar position="fixed" narrow={isNarrowed}>
-                <CSidebarBrand className={ isNarrowed === false ? "shown" : "hidden"}>NDS Challenge</CSidebarBrand>
+            <CSidebar 
+                position="fixed" 
+                narrow={sidebarNarrowed}
+                visible={sidebarShow}
+                onVisibleChange={(visible) => {
+                    dispatch({type: 'set', sidebarShow: visible})
+                }}
+            >
+                {sidebarNarrowed === false 
+                    ? 
+                        <CSidebarBrand>NDS Challenge</CSidebarBrand>
+                    :
+                        <CSidebarBrand>NDS</CSidebarBrand>
+                }
+                
                 <CSidebarNav>
                         <CNavItem href="#">
                             <CIcon customClassName="nav-icon" icon={cilHome} />
@@ -28,7 +38,7 @@ const SidebarMenu = () => {
                             Employee
                         </CNavItem>
                 </CSidebarNav>
-                <CSidebarToggler onClick={onNarrow}/>
+                <CSidebarToggler onClick={() => dispatch({ type: 'set', sidebarNarrowed: !sidebarNarrowed })}/>
             </CSidebar>
         </>
     )
