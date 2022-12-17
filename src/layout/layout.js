@@ -9,7 +9,7 @@ const Layout = ({content}) => {
 
     return(
         <div>
-            <SidebarMenu />
+            <SidebarMenu/>
             <div className={
                 sidebarShow === true ?
                     sidebarNarrowed === true 

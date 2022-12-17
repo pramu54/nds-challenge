@@ -1,11 +1,10 @@
 import './App.css';
-import Layout from './layout/layout';
-import ListEmployees from './pages/listEmployees/listEmployees';
+import WebRoute from './routes/webRoute';
 
 function App() {
   return (
     <>
-      <Layout content={<ListEmployees />}/>
+      <WebRoute/>
     </>
   );
 }

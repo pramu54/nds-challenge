@@ -1,4 +1,16 @@
 .employees{
     background-color: white;
     padding: 3em;
+    overflow: auto;
+}
+
+.top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.search{
+    width: 30em;
+    display: flex;
+    gap: 1em;
 }
