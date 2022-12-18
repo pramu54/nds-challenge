@@ -7,7 +7,7 @@ const WebRoute = () => {
     return(
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Navigate to="/home/employees" />} />
+                <Route path="/" element={<Navigate to="/home/employees" />}/>
                 <Route path="/home/employees" element={<Layout content={<ListEmployees />} />} />
                 <Route path="/home/employees/add" element={<Layout content={<EmployeesForm />} />} />
                 <Route path="/home/employees/update/:id" element={<Layout content={<EmployeesForm />} />} />

@@ -1,7 +1,8 @@
 import { cilMenu } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
-import { CContainer, CHeader, CHeaderToggler } from "@coreui/react";
+import { CContainer, CHeader, CHeaderDivider, CHeaderToggler } from "@coreui/react";
 import { useDispatch, useSelector } from "react-redux";
+import AppBreadcrumb from "../../commons/breadcrumb/breadcrumb";
 import useWindowDimensions from "../../helper/windowSize";
 import "./style/header.css";
 
@@ -24,6 +25,10 @@ const TopHeader = () => {
                     >
                         <CIcon icon={cilMenu} size="lg" />
                     </CHeaderToggler>
+                </CContainer>
+                <CHeaderDivider />
+                <CContainer fluid>
+                    <AppBreadcrumb />
                 </CContainer>
             </CHeader>
         </>

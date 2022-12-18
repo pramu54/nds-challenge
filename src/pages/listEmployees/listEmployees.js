@@ -2,7 +2,8 @@ import { CFormInput, CTableDataCell, CTableHeaderCell, CTableRow } from "@coreui
 import axios from "axios";
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import AlertSolid from "../../commons/alert/alert";
 import ButtonPrimary from "../../commons/buttons/buttons";
 import MainTable from "../../commons/table/table";
 import "./style/listEmployees.css";
@@ -32,10 +33,14 @@ const headCells = [
 
 const ListEmployees = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [employees, setEmployees] = useState([]);
     const [newEmployees, setNewEmployees] = useState([]);
     const [nikSearch, setNikSearch] = useState("");
     const [fullnameSearch, setFullnameSearch] = useState("");
+    const [isVisible, setIsVisible] = useState(false);
+    const [alertColor, setAlertColor] = useState("");
+    const [alertLabel, setAlertLabel] = useState("");
 
     const getData = () => {
         axios
@@ -58,9 +63,21 @@ const ListEmployees = () => {
             const { data } = res;
             console.log(data);
             getData();
+            setIsVisible(true);
+            setAlertColor("warning");
+            setAlertLabel("Data deleted!");
+            setTimeout(() => {
+                setIsVisible(false);
+            }, 3000);
         })
         .catch((err) => {
             console.log(err.response);
+            setIsVisible(true);
+            setAlertColor("danger");
+            setAlertLabel("Failed to delete data");
+            setTimeout(() => {
+                setIsVisible(false);
+            }, 3000);
         });
     }
 
@@ -104,6 +121,7 @@ const ListEmployees = () => {
                     <ButtonPrimary color="dark" label="ADD" onClick={()=>navigate('/home/employees/add')}/>
                 </div>
             </div>
+            <AlertSolid color={alertColor} visible={isVisible} label={alertLabel}/>
             <div className="search">
                 <CFormInput 
                     type="text" 
@@ -143,6 +161,7 @@ const ListEmployees = () => {
                     ))
                 }
             />
+            {console.log('pathname', location.pathname)}
         </div>
     )
 }

@@ -5,11 +5,14 @@ import ButtonPrimary from "../../commons/buttons/buttons";
 import TextField from "../../commons/textField/textField";
 import "./style/employeesForm.css";
 import "react-datepicker/dist/react-datepicker.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import AlertSolid from "../../commons/alert/alert";
+import { useDispatch, useSelector } from "react-redux";
 
 const EmployeesForm = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const {id} = useParams();
     const [defaultValue, setDefaultValue] = useState({
         nik: "",
@@ -26,6 +29,9 @@ const EmployeesForm = () => {
     const [isSalaryInvalid, setIsSalaryInvalid] = useState(false);
     const [isNikInvalid, setIsNikInvalid] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+    const [alertColor, setAlertColor] = useState("");
+    const [alertLabel, setAlertLabel] = useState("");
 
     const handleNIK = (e) => {
         const value = e.target.value.replace(/\D/g, "");
@@ -52,12 +58,12 @@ const EmployeesForm = () => {
     const handleSalary = (e) => {
         const value = e.target.value.replace(/\D/g, "");
 
-        if(parseInt(value)<190 && parseInt(value)>1900){
+        if(parseInt(value)<190 || parseInt(value)>1900){
             setIsSalaryInvalid(true);
         } else {
             setIsSalaryInvalid(false);
-            setSalary(value);
         }
+        setSalary(value);
     };
 
     const getData = () => {
@@ -107,9 +113,21 @@ const EmployeesForm = () => {
             })
         .then((res)=>{
             console.log(res);
-            navigate('/');
+            setIsVisible(true);
+            setAlertColor("success");
+            setAlertLabel("New Data successfuly added");
+            setTimeout(() => {
+                setIsVisible(false);
+                navigate('/');
+            }, 3000);
         }).catch((err)=>{
             console.log(err);
+            setIsVisible(true);
+            setAlertColor("danger");
+            setAlertLabel("Failed to add data");
+            setTimeout(() => {
+                setIsVisible(false);
+            }, 3000);
         });
     }
 
@@ -124,9 +142,22 @@ const EmployeesForm = () => {
             })
         .then((res)=>{
             console.log(res);
-            navigate('/');
+            setIsVisible(true);
+            setAlertColor("success");
+            setAlertLabel("Data successfuly updated");
+            setTimeout(() => {
+                setIsVisible(false);
+                navigate('/');
+            }, 3000);
+            // navigate('/');
         }).catch((err)=>{
             console.log(err);
+            setIsVisible(true);
+            setAlertColor("danger");
+            setAlertLabel("Failed to add data");
+            setTimeout(() => {
+                setIsVisible(false);
+            }, 3000);
         });
     }
 
@@ -154,6 +185,9 @@ const EmployeesForm = () => {
                 }
                 
             </div>
+            
+            <AlertSolid color={alertColor} visible={isVisible} label={alertLabel}/>
+
             {isReady === true && 
             <CForm>
                 <CCol sm={12} className="input-group" >
@@ -202,6 +236,7 @@ const EmployeesForm = () => {
                 </div>
             </CForm>
             }
+            {console.log('pathname', location.pathname)}
         </div>
     )
 }

@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 
 const initialState = {
   sidebarShow: true,
-  sidebarNarrowed: false
+  sidebarNarrowed: false,
 }
 
 const changeState = (state = initialState, { type, ...rest }) => {
